@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: "If you use this software in your research or teaching, please cite it as below."
+type: software
+title: "MIRL Provenance: an object file for dispersal and restitution"
+abstract: >-
+  A no-build, local-first object-file and restitution-dossier tool for a single
+  contested or dispersed object, or a body of them. Each object file holds an
+  identity (titles in any script, type, materials, origin and community,
+  identifiers), a dated chain of custody, sightings in the record, competing
+  claims for return, a current holder and location with consent-aware
+  publication, evidence hashed with sha-256 and held to chosen consent states,
+  a register of sources whose identities never publish, CARE notes and
+  Traditional Knowledge / Biocultural Labels (Local Contexts), an atlas of
+  consented locations, a chronology, CSV import, serverless merge, fixity
+  checks, passphrase encryption of the working file, and self-contained
+  restitution-dossier, sought-notice, and public-file exports. Arabic and
+  right-to-left ready. The nearest sibling of MIRL Lacuna.
+authors:
+  - family-names: "O'Brien"
+    given-names: "Jeff"
+    email: "jeffobrien@ucsb.edu"
+    affiliation: >-
+      Material / Image Research Lab, Department of History of Art &
+      Architecture, University of California, Santa Barbara
+version: "1.0.0"
+date-released: "2026-06-18"
+license: MIT
+repository-code: "https://github.com/mirl-ucsb/mirl-provenance"
+url: "https://mirl-ucsb.github.io/mirl-provenance/"
+keywords:
+  - art history
+  - digital humanities
+  - cultural heritage
+  - provenance
+  - restitution
+  - repatriation
+  - NAGPRA
+  - colonial dispersal
+  - Indigenous data sovereignty
+  - CARE principles
+  - Traditional Knowledge Labels
+  - IIIF
+  - minimal computing

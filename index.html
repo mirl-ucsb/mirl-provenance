@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MIRL Provenance · an object file for dispersal and restitution</title>
+<meta name="description" content="A local-first object-file and restitution-dossier tool for contested and dispersed objects: an object biography with a dated chain of custody, sightings, competing claims, evidence hashes, consent states, CARE notes and Traditional Knowledge / Biocultural Labels. A no-build tool from the Material / Image Research Lab, UCSB.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="app">
+  <div class="plate">
+    <h1>MIRL&nbsp;Provenance</h1>
+    <span class="tag">an object file for dispersal and restitution</span>
+  </div>
+  <a class="lab" href="https://mirl.arthistory.ucsb.edu" target="_blank" rel="noopener">Material&nbsp;/&nbsp;Image Research Lab<span class="uni">University of California, Santa&nbsp;Barbara</span></a>
+</header>
+
+<nav class="folio">
+  <div class="views">
+    <button class="view on" data-view="register"><span class="fol">Fol. I</span>Docket</button>
+    <button class="view" data-view="entry"><span class="fol">Fol. II</span>Object file</button>
+    <button class="view" data-view="timeline"><span class="fol">Fol. III</span>Chronology</button>
+    <button class="view" data-view="statistics"><span class="fol">Fol. IV</span>Statistics</button>
+    <button class="view" data-view="atlas"><span class="fol">Fol. V</span>Atlas</button>
+    <button class="view" data-view="index"><span class="fol">Fol. VI</span>Index</button>
+  </div>
+  <div class="tools">
+    <button class="btn" id="new-entry-btn" title="Open a new object file in the docket">New object</button>
+    <div class="menu-wrap">
+      <button class="btn" id="project-btn">Project &#9662;</button>
+      <div class="menu hidden" id="project-menu">
+        <button data-act="save">Save project (.json)<small>your full working file; restricted evidence stays in it</small></button>
+        <button data-act="open">Open project (.json)</button>
+        <button data-act="disk" id="disk-item">Keep the file on disk<small>save continuously to a .json you choose, alongside the browser autosave</small></button>
+        <button data-act="lock" id="lock-item">Lock this file<small>a passphrase encrypts the file at rest; exports stay plain</small></button>
+        <hr>
+        <button data-act="sources">Sources<small>the people the file rests on; aliases publish, identities never do</small></button>
+        <button data-act="labels">Labels and protocols<small>define a community's own TK / BC labels, beyond the standard set</small></button>
+        <hr>
+        <button data-act="csv">Import objects (.csv)<small>an old inventory becomes draft object files, held back until published</small></button>
+        <button data-act="merge">Merge a project (.json)<small>a colleague's file, reconciled object by object</small></button>
+        <button data-act="fixity">Check evidence files<small>verify files against their recorded sha-256 fingerprints</small></button>
+        <hr>
+        <button data-act="new">New file<small>start empty</small></button>
+        <button data-act="sample">Open the sample file<small>a fictional dispersed object, for trying things</small></button>
+      </div>
+    </div>
+    <div class="menu-wrap">
+      <button class="btn" id="export-btn">Export &#9662;</button>
+      <div class="menu hidden" id="export-menu">
+        <button data-act="book">Restitution dossier (print)<small>a cover leaf, one object file per page, the docket and index as appendices</small></button>
+        <button data-act="letter">Claim letter (print)<small>a draft request for return of the open object, with its legal bases</small></button>
+        <button data-act="notice">Sought notice (print)<small>the open object as a one-page appeal: held by, claimed by, whom to tell</small></button>
+        <button data-act="aid">Public file (.html)<small>one self-contained page: docket, object files, chronology, atlas</small></button>
+        <hr>
+        <button data-act="objectid">Object ID records (.json)<small>the Getty / ICOM standard, for police, customs, INTERPOL</small></button>
+        <button data-act="jsonld">Linked data (CIDOC-CRM / JSON-LD)<small>for an Arches instance or another CRM consumer to ingest</small></button>
+        <button data-act="csv">Docket as spreadsheet (.csv)</button>
+        <button data-act="json">Public data (.json)</button>
+        <hr>
+        <button data-act="print">Print this view</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="view" id="view-register"></section>
+  <section class="view hidden" id="view-entry"></section>
+  <section class="view hidden" id="view-timeline"></section>
+  <section class="view hidden" id="view-statistics"></section>
+  <section class="view hidden" id="view-atlas"></section>
+  <section class="view hidden" id="view-index"></section>
+</main>
+
+<div class="toast" id="toast"></div>
+<input type="file" id="file-input" class="sr">
+<input type="file" id="project-input" accept="application/json,.json" class="sr">
+<input type="file" id="csv-input" accept=".csv,text/csv" class="sr">
+<input type="file" id="merge-input" accept="application/json,.json" class="sr">
+<input type="file" id="fixity-input" multiple class="sr">
+
+<script src="vendor/openseadragon.min.js"></script>
+<script src="vendor/land.js"></script>
+<script src="vendor/gazetteer.js"></script>
+<script src="samples/sample-data.js"></script>
+<script src="js/model.js"></script>
+<script src="js/geocode.js"></script>
+<script src="js/citation.js"></script>
+<script src="js/gaps.js"></script>
+<script src="js/register.js"></script>
+<script src="js/record.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/atlas.js"></script>
+<script src="js/indexes.js"></script>
+<script src="js/importers.js"></script>
+<script src="js/exporters.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

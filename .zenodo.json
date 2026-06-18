@@ -1,0 +1,40 @@
+{
+  "title": "MIRL Provenance: an object file for dispersal and restitution",
+  "description": "A no-build, local-first object-file and restitution-dossier tool for a single contested or dispersed object, or a body of them. Each object file holds an identity (titles in any script, type, materials, origin and community, identifiers), a dated chain of custody, sightings in the record, competing claims for return, a current holder and location with consent-aware publication, evidence hashed with sha-256 and held to chosen consent states, a register of sources whose identities never publish, CARE notes and Traditional Knowledge / Biocultural Labels (Local Contexts), an atlas of consented locations, a chronology, CSV import, serverless merge, fixity checks, passphrase encryption of the working file, and self-contained restitution-dossier, sought-notice, and public-file exports. Arabic and right-to-left ready. The nearest sibling of MIRL Lacuna.",
+  "creators": [
+    {
+      "name": "O'Brien, Jeff",
+      "affiliation": "Material / Image Research Lab, Department of History of Art & Architecture, University of California, Santa Barbara"
+    }
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "access_right": "open",
+  "keywords": [
+    "art history",
+    "digital humanities",
+    "cultural heritage",
+    "provenance",
+    "restitution",
+    "repatriation",
+    "NAGPRA",
+    "colonial dispersal",
+    "Indigenous data sovereignty",
+    "CARE principles",
+    "Traditional Knowledge Labels",
+    "IIIF",
+    "minimal computing"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/mirl-ucsb/mirl-provenance",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://mirl-ucsb.github.io/mirl-provenance/",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    }
+  ]
+}
