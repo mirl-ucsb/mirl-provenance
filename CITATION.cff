@@ -25,6 +25,14 @@ authors:
 version: "1.0.0"
 date-released: "2026-06-18"
 license: MIT
+doi: 10.5281/zenodo.20750381
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.20750381
+    description: The concept DOI for all versions.
+  - type: doi
+    value: 10.5281/zenodo.20750382
+    description: The DOI for version 1.0.0.
 repository-code: "https://github.com/mirl-ucsb/mirl-provenance"
 url: "https://mirl-ucsb.github.io/mirl-provenance/"
 keywords:

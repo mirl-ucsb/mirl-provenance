@@ -1,5 +1,7 @@
 # MIRL Provenance
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20750381.svg)](https://doi.org/10.5281/zenodo.20750381)
+
 **An object file for dispersal and restitution.** A no-build, local-first tool
 for building the biography of a single contested or dispersed object, or a body
 of them: its identity, the dated chain of custody, the sightings and the
@@ -144,4 +146,6 @@ all vendored from Fontsource. Deep-zoom viewing by OpenSeadragon. Offline
 geocoding from GeoNames; coastline from Natural Earth. The CARE principles are
 those of the Global Indigenous Data Alliance; the TK and BC Labels are those of
 [Local Contexts](https://localcontexts.org). If you use it, please cite it with
-the metadata in [`CITATION.cff`](CITATION.cff).
+the metadata in [`CITATION.cff`](CITATION.cff) (concept DOI
+[10.5281/zenodo.20750381](https://doi.org/10.5281/zenodo.20750381), which always
+resolves to the latest version).

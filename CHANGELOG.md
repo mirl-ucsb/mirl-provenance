@@ -6,10 +6,14 @@ All notable changes to MIRL Provenance are recorded here. The format follows
 
 ## [1.0.0] - 2026-06-18
 
-First public release. MIRL Provenance is a no-build, local-first object-file
-and restitution-dossier tool, the nearest sibling of MIRL Lacuna, sharing its
-model, consent discipline, sources register, sightings, hashing, atlas, and
-offline geocoder.
+First public release, archived on Zenodo. Concept DOI
+[10.5281/zenodo.20750381](https://doi.org/10.5281/zenodo.20750381) (resolves to
+the latest version); this release is
+[10.5281/zenodo.20750382](https://doi.org/10.5281/zenodo.20750382).
+
+MIRL Provenance is a no-build, local-first object-file and restitution-dossier
+tool, the nearest sibling of MIRL Lacuna, sharing its model, consent
+discipline, sources register, sightings, hashing, atlas, and offline geocoder.
 
 ### Added
 
