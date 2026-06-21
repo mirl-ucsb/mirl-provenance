@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20750381.svg)](https://doi.org/10.5281/zenodo.20750381)
 
-> **In active development.** This tool is being built and refined in the open. Its features, file formats, and interface may still change, and some parts may be incomplete or rough. Please keep your own copies of anything important, and reports of whatever breaks are welcome.
+> **In active development.** This tool is being built and refined in the open. Its features, file formats, and interface may still change, and some parts may be incomplete or rough. Because it is still in development, do not rely on it alone to protect the people named in a case, and confirm what is safe to release before you export or share. Please keep your own copies of anything important, and reports of whatever breaks are welcome.
 
 **An object file for dispersal and restitution.** A no-build, local-first tool
 for building the biography of a single contested or dispersed object, or a body
