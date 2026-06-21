@@ -2,6 +2,8 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20750381.svg)](https://doi.org/10.5281/zenodo.20750381)
 
+> **In active development.** This tool is being built and refined in the open. Its features, file formats, and interface may still change, and some parts may be incomplete or rough. Please keep your own copies of anything important, and reports of whatever breaks are welcome.
+
 **An object file for dispersal and restitution.** A no-build, local-first tool
 for building the biography of a single contested or dispersed object, or a body
 of them: its identity, the dated chain of custody, the sightings and the
