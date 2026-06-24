@@ -28,7 +28,10 @@ PV.App = (function () {
       const sect = document.getElementById('view-' + v);
       if (sect) sect.classList.toggle('hidden', v !== r.view);
       const btn = document.querySelector('nav.folio button[data-view="' + v + '"]');
-      if (btn) btn.classList.toggle('on', v === r.view);
+      if (btn) {
+        btn.classList.toggle('on', v === r.view);
+        if (v === r.view) btn.setAttribute('aria-current', 'page'); else btn.removeAttribute('aria-current');
+      }
     });
 
     if (r.view === 'register') PV.Register.render();
