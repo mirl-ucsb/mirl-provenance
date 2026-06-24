@@ -41,9 +41,32 @@ PV.App = (function () {
   }
 
   /* ---------- a paper dialog over the page ---------- */
+  /* make an overlay behave as a modal: label it, trap Tab inside it, close on
+     Escape, and restore focus to whatever was focused before it opened */
+  function modalize(overlay, dlg, closeFn, initialFocus) {
+    const prev = document.activeElement;
+    dlg.setAttribute('role', 'dialog');
+    dlg.setAttribute('aria-modal', 'true');
+    const h3 = dlg.querySelector('h3');
+    if (h3) { if (!h3.id) h3.id = 'dlg-' + U.uid(); dlg.setAttribute('aria-labelledby', h3.id); }
+    const SEL = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusables = () => Array.from(dlg.querySelectorAll(SEL)).filter(e => e.offsetParent !== null);
+    overlay.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.preventDefault(); closeFn(); return; }
+      if (e.key !== 'Tab') return;
+      const f = focusables(); if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    setTimeout(() => { (initialFocus || focusables()[0] || dlg).focus(); }, 40);
+    return () => { try { if (prev && prev.focus) prev.focus(); } catch (e) {} };
+  }
+
   function sheet(title, body, actions) {
     const overlay = U.h('div', { class: 'sheet-overlay' });
-    const close = () => overlay.remove();
+    let restore = () => {};
+    const close = () => { overlay.remove(); restore(); };
     const dlg = U.h('div', { class: 'paper-dialog' },
       U.h('h3', null, title),
       U.h('div', { class: 'dlg-body' }, body));
@@ -57,6 +80,7 @@ PV.App = (function () {
     overlay.append(dlg);
     overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
     document.body.append(overlay);
+    restore = modalize(overlay, dlg, close);
     return close;
   }
 
@@ -212,14 +236,15 @@ PV.App = (function () {
       }, 'Start empty instead'));
     }
     acts.append(U.h('button', { class: 'btn', onclick: tryOpen }, 'Unlock'));
-    overlay.append(U.h('div', { class: 'paper-dialog', style: { maxWidth: '460px' } },
+    const dlg = U.h('div', { class: 'paper-dialog', style: { maxWidth: '460px' } },
       U.h('h3', null, 'This file is locked'),
       U.h('div', { class: 'dlg-body' },
         U.h('p', { class: 'hint', style: { margin: '12px 0 16px' } }, 'Its passphrase opens it; nothing shows until then.'),
         U.h('div', { class: 'field' }, pass), err),
-      acts));
+      acts);
+    overlay.append(dlg);
     document.body.append(overlay);
-    setTimeout(() => pass.focus(), 60);
+    modalize(overlay, dlg, () => { if (cancellable) overlay.remove(); }, pass);
   }
 
   /* ---------- project I/O ---------- */
