@@ -7,7 +7,7 @@
 
 PV.Gaps = (function () {
   const U = PV.util;
-  const NOW_YEAR = 2026;
+  const NOW_YEAR = new Date().getFullYear();
 
   /* a free-text custody date to a { s, e } year span, or null if no year.
      "1899 to 1961" -> 1899..1961; "1898" -> a point; "to 1990" -> open start;

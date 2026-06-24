@@ -131,8 +131,9 @@ PV.Exporters = (function () {
   ].join('\n');
 
   async function findingAid() {
-    U.toast('Composing the public file…');
     const pub = PV.Model.publicClone();
+    if (!pub.records.length) return U.toast('Nothing is marked publish yet; the public file would be empty');
+    U.toast('Composing the public file…');
     const p = pub.project;
     const css = await inlineCSS();
     const e = U.esc;
