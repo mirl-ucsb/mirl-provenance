@@ -478,6 +478,41 @@ PV.Exporters = (function () {
     setTimeout(() => window.print(), 150);
   }
 
+  /* ---------- a plain account of what an export carries, and what stays ---------- */
+  function releaseSummary() {
+    const pub = PV.Model.publicClone();
+    const pubRecs = pub.records || [];
+    const pubIds = new Set(pubRecs.map(r => r.id));
+    const all = S.records || [];
+    let evidence = 0, sightings = 0, claims = 0, placesExact = 0, placesApprox = 0;
+    pubRecs.forEach(r => {
+      evidence += (r.evidence || []).length;
+      sightings += (r.sightings || []).length;
+      claims += (r.claims || []).length;
+      const lp = r.location && r.location.publish;
+      if (lp === 'exact') placesExact++; else if (lp === 'approximate') placesApprox++;
+    });
+    let evidenceWithheld = 0, sightingsWithheld = 0, placesWithheld = 0, holderNotes = 0;
+    all.forEach(r => {
+      if (!pubIds.has(r.id)) return;
+      (r.evidence || []).forEach(e => { if (e.consent !== 'public') evidenceWithheld++; });
+      (r.sightings || []).forEach(x => { if (x.consent !== 'public') sightingsWithheld++; });
+      const loc = r.location || {};
+      if (loc.publish === 'withheld' && (loc.lat != null || (loc.place || '').trim())) placesWithheld++;
+      if (r.currentHolder && (r.currentHolder.note || '').trim()) holderNotes++;
+    });
+    return {
+      total: all.length,
+      publishing: { objects: pubRecs.length, evidence, sightings, claims, placesExact, placesApprox },
+      withheld: {
+        heldBack: all.filter(r => !r.struck && !r.publish).length,
+        struck: all.filter(r => r.struck).length,
+        evidence: evidenceWithheld, sightings: sightingsWithheld, places: placesWithheld,
+        holderNotes, sources: (S.project.sources || []).length,
+      },
+    };
+  }
+
   return { saveProject, publicJSON, registerCSV, findingAid, printBook, printNotice,
-    claimLetter, objectIDExport, jsonldExport };
+    claimLetter, objectIDExport, jsonldExport, releaseSummary };
 })();

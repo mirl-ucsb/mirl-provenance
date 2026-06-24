@@ -60,6 +60,35 @@ PV.App = (function () {
     return close;
   }
 
+  /* ---------- release preview: a deliberate pause before a public export ---------- */
+  function confirmRelease(label, onProceed) {
+    const s = PV.Exporters.releaseSummary();
+    const p = s.publishing, w = s.withheld;
+    const n = (x, one, many) => x + ' ' + (x === 1 ? one : (many || one + 's'));
+    const line = (box, txt) => box.append(U.h('div', { class: 'rl-line' }, txt));
+    const body = U.h('div', { class: 'release-summary' });
+    body.append(U.h('p', { class: 'rl-intro' },
+      'This is what the ' + label + ' carries out of the working file. Restricted material, holder notes, the research log, and source identities stay here.'));
+    const pub = U.h('div', { class: 'rl-sec rl-publish' }, U.h('h4', null, 'Leaves in the ' + label));
+    line(pub, n(p.objects, 'object file') + ' of ' + s.total);
+    line(pub, n(p.evidence, 'evidence item') + ', public consent only');
+    line(pub, n(p.sightings, 'sighting') + ' cleared for publication');
+    line(pub, n(p.claims, 'claim'));
+    line(pub, n(p.placesExact + p.placesApprox, 'place') + ' located: ' + p.placesExact + ' exact, ' + p.placesApprox + ' rounded');
+    const wh = U.h('div', { class: 'rl-sec rl-withheld' }, U.h('h4', null, 'Stays in the working file'));
+    line(wh, n(w.heldBack, 'object file') + ' held back, ' + w.struck + ' struck');
+    line(wh, n(w.evidence, 'evidence item') + ' restricted or embargoed');
+    line(wh, n(w.sightings, 'sighting') + ' withheld by consent');
+    line(wh, n(w.holderNotes, 'current-holder note') + ', never exported');
+    line(wh, n(w.places, 'place') + ' withheld; coordinates rounded unless marked exact');
+    line(wh, 'The research log, and every source identity behind the ' + w.sources + ' ' + (w.sources === 1 ? 'alias' : 'aliases'));
+    body.append(pub, wh);
+    sheet('Before the ' + label + ' leaves', body, [
+      { label: 'Cancel' },
+      { label: 'Export the ' + label, onclick: () => { onProceed(); } },
+    ]);
+  }
+
   /* ---------- change notifications ---------- */
   function entryChanged(r, structural) {
     PV.Model.touch(r);
@@ -639,19 +668,19 @@ PV.App = (function () {
       const act = e.target.closest('button') && e.target.closest('button').dataset.act;
       if (!act) return;
       closeMenus();
-      if (act === 'csv') PV.Exporters.registerCSV();
-      else if (act === 'json') PV.Exporters.publicJSON();
-      else if (act === 'objectid') PV.Exporters.objectIDExport();
-      else if (act === 'jsonld') PV.Exporters.jsonldExport();
-      else if (act === 'aid') PV.Exporters.findingAid();
-      else if (act === 'book') PV.Exporters.printBook();
+      if (act === 'csv') confirmRelease('docket spreadsheet', () => PV.Exporters.registerCSV());
+      else if (act === 'json') confirmRelease('public data file', () => PV.Exporters.publicJSON());
+      else if (act === 'objectid') confirmRelease('Object ID records', () => PV.Exporters.objectIDExport());
+      else if (act === 'jsonld') confirmRelease('linked data file', () => PV.Exporters.jsonldExport());
+      else if (act === 'aid') confirmRelease('public file', () => PV.Exporters.findingAid());
+      else if (act === 'book') confirmRelease('restitution dossier', () => PV.Exporters.printBook());
       else if (act === 'notice') {
         if (S.route.view !== 'entry' || !PV.Record.current) U.toast('Open an object file first; the notice prints one object');
-        else PV.Exporters.printNotice(PV.Record.current);
+        else confirmRelease('sought notice', () => PV.Exporters.printNotice(PV.Record.current));
       }
       else if (act === 'letter') {
         if (S.route.view !== 'entry' || !PV.Record.current) U.toast('Open an object file first; the letter is for one object');
-        else PV.Exporters.claimLetter(PV.Record.current);
+        else confirmRelease('claim letter', () => PV.Exporters.claimLetter(PV.Record.current));
       }
       else if (act === 'print') window.print();
     });

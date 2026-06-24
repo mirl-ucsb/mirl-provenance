@@ -518,6 +518,11 @@ table.register th.sel, table.register td.sel { width: 36px; border-left: 0; text
 }
 .paper-dialog .dlg-body { max-height: 56vh; overflow-y: auto; }
 .paper-dialog .dlg-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+.release-summary .rl-intro { margin: 0 0 16px; color: var(--ink-2); }
+.release-summary .rl-sec { margin-bottom: 16px; }
+.release-summary .rl-sec h4 { margin: 0 0 7px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-3); }
+.release-summary .rl-line { padding: 3px 0 3px 13px; border-left: 2px solid var(--line-2); }
+.release-summary .rl-withheld .rl-line { border-left-color: var(--stamp); }
 .conflict { border-bottom: 1px solid var(--line); padding: 15px 0 13px; }
 .conflict .cid { font-family: var(--mono); font-size: 12.5px; color: var(--stamp); letter-spacing: .05em; margin-bottom: 8px; }
 .conflict .sides { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
