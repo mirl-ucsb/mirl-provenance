@@ -117,7 +117,13 @@ PV.Atlas = (function () {
     sect.innerHTML = '<div class="sheet">' + html({ project: PV.state.project, records: PV.state.records }, {}) + '</div>';
     sect.querySelectorAll('[data-id]').forEach(el => {
       el.style.cursor = 'pointer';
-      el.addEventListener('click', () => { location.hash = '#/entry/' + el.dataset.id; });
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('role', 'button');
+      const rec = PV.Model.get(el.dataset.id);
+      el.setAttribute('aria-label', (el.tagName.toLowerCase() === 'g' ? 'Place: ' : 'Open ') + (rec ? PV.Model.title(rec) : el.dataset.id));
+      const go = () => { location.hash = '#/entry/' + el.dataset.id; };
+      el.addEventListener('click', go);
+      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
     });
   }
 
