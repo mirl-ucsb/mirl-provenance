@@ -296,10 +296,11 @@ PV.Register = (function () {
     batchline();
 
     host.querySelectorAll('th[data-sort]').forEach(th => {
+      const by = th.dataset.sort;
       th.setAttribute('tabindex', '0');
-      th.setAttribute('role', 'button');
+      if (S.sort.by === by) th.setAttribute('aria-sort', S.sort.dir > 0 ? 'ascending' : 'descending');
+      else th.removeAttribute('aria-sort');
       const doSort = () => {
-        const by = th.dataset.sort;
         if (S.sort.by === by) S.sort.dir = -S.sort.dir; else { S.sort.by = by; S.sort.dir = 1; }
         renderTable();
       };
