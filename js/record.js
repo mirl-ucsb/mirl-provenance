@@ -145,14 +145,16 @@ PV.Card = (function () {
   /* dated reports placing the object in the record: the dossier of sightings */
   function sightingsHTML(r, opts) {
     const p = opts.project || PV.state.project;
-    const xs = r.sightings || [];
+    const all = r.sightings || [];
+    const xs = opts.publicOnly ? all.filter(x => x.consent === 'public') : all;
     if (!xs.length) return '';
     let h = '<div class="of-sect"><h3>Sightings in the record</h3><table class="ev-table">';
     xs.forEach((x) => {
       const alias = aliasOf(x.sourceId, p);
       h += '<tr><td class="kind" style="width:128px;padding-top:13px">' + U.esc(x.date || 'undated') + '</td><td>';
       h += '<div class="ev-label">' + U.esc(x.kind) + (x.place ? ' · ' + U.esc(x.place) : '') + '</div>';
-      const meta = [alias ? 'reported by ' + U.esc(alias) : ''].filter(Boolean).join(' · ');
+      const meta = [alias ? 'reported by ' + U.esc(alias) : '',
+        (!opts.publicOnly && x.consent !== 'public') ? 'withheld from exports' : ''].filter(Boolean).join(' · ');
       if (meta) h += '<div class="ev-meta">' + meta + '</div>';
       if (x.note) h += '<div class="ev-note"' + dirAttr(x.note) + '>' + U.esc(x.note) + '</div>';
       h += '</td><td><span class="bearing ' + U.esc(x.bearing) + '">' + U.esc(x.bearing) + '</span></td></tr>';
@@ -283,7 +285,7 @@ PV.Card = (function () {
       let v = U.esc(ch.name);
       if (ch.since) v += ' <span style="font-style:italic">(since ' + U.esc(ch.since) + ')</span>';
       if (ch.basis) v += '<div class="ev-meta">' + U.esc(ch.basis) + '</div>';
-      if (ch.note) v += '<div class="ev-note">' + U.esc(ch.note) + '</div>';
+      if (ch.note && !opts.publicOnly) v += '<div class="ev-note">' + U.esc(ch.note) + '</div>';
       h += row('Current holder', v);
     }
     const loc = r.location || {};
@@ -657,7 +659,8 @@ PV.Desk = (function () {
       U.h('div', { class: 'row2' },
         field(r, 'Held since', () => ch.since, v => { ch.since = v; }, { ph: 'e.g. 1898, or 1965' }),
         field(r, 'On what basis', () => ch.basis, v => { ch.basis = v; }, { ph: 'accession, purchase, bequest' })),
-      field(r, 'Note', () => ch.note, v => { ch.note = v; }, { ph: 'anything the holder states about how it was acquired' }));
+      field(r, 'Note', () => ch.note, v => { ch.note = v; }, { ph: 'anything the holder states about how it was acquired' }),
+      U.h('div', { class: 'note' }, 'The holder’s name, date, and basis publish; this note stays in the working file.'));
   }
 
   /* ----- the chain of custody: dated holders, oldest to newest ----- */
@@ -1002,6 +1005,17 @@ PV.Desk = (function () {
           });
           bearingPick.append(btn);
         });
+        const sConsentSel = U.h('select', null, ...PV.vocab.CONSENT.map(c =>
+          U.h('option', { value: c.key, selected: x.consent === c.key ? '' : null }, c.label + ': ' + c.gloss)));
+        const sUntilInput = U.h('input', { type: 'date', value: x.until || '' });
+        sUntilInput.addEventListener('input', () => { x.until = sUntilInput.value; PV.App.entryChanged(r); });
+        const sUntilField = U.h('div', { class: 'field', style: { display: x.consent === 'embargoed' ? '' : 'none' } },
+          U.h('label', null, 'Embargoed until'), sUntilInput);
+        sConsentSel.addEventListener('change', () => {
+          x.consent = sConsentSel.value;
+          sUntilField.style.display = x.consent === 'embargoed' ? '' : 'none';
+          PV.App.entryChanged(r);
+        });
         const item = U.h('div', { class: 'item' },
           U.h('div', { class: 'item-head' },
             U.h('span', { class: 'n' }, 'Sighting ' + (i + 1)),
@@ -1015,6 +1029,9 @@ PV.Desk = (function () {
             U.h('div', { class: 'field' }, U.h('label', null, 'On whose word'),
               sourceSelect(x.sourceId, v => { x.sourceId = v; PV.App.entryChanged(r); })),
             U.h('div', { class: 'field' }, U.h('label', null, 'Bearing on the provenance'), bearingPick)),
+          U.h('div', { class: 'field' }, U.h('label', null, 'Consent'), sConsentSel,
+            U.h('div', { class: 'note' }, 'Only sightings marked public enter the object file and exports. The source’s alias is all that ever shows.')),
+          sUntilField,
           field(r, 'Note', () => x.note, v => { x.note = v; }, { ph: 'lot, price, citation, what was recorded' }));
         box.append(item);
       });
@@ -1024,12 +1041,12 @@ PV.Desk = (function () {
       box,
       U.h('div', { class: 'add-line' }, U.h('button', {
         class: 'act', onclick: () => {
-          r.sightings.push({ id: U.uid(), date: '', kind: 'auction lot', bearing: 'supports', place: '', sourceId: null, note: '' });
+          r.sightings.push({ id: U.uid(), date: '', kind: 'auction lot', bearing: 'supports', place: '', sourceId: null, note: '', consent: 'restricted', until: '' });
           PV.App.entryChanged(r, true); redraw();
         },
       }, '+ Add a sighting')),
       U.h('div', { class: 'note' },
-        'Sightings publish with the object file, under their sources’ aliases. What must stay private belongs in the research log below.'));
+        'Each sighting carries its own consent: only those marked public enter the object file and exports, always under the source’s alias. What must stay private belongs in the research log below.'));
   }
 
   /* ----- the research log: the search itself, dated; never exported ----- */

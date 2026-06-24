@@ -306,6 +306,7 @@ PV.Model = (function () {
     }, x)).filter(x => x.code);
     out.sightings = (Array.isArray(r.sightings) ? r.sightings : []).map(x => Object.assign({
       id: PV.util.uid(), date: '', kind: 'auction lot', bearing: 'supports', place: '', sourceId: null, note: '',
+      consent: 'restricted', until: '',
     }, x));
     out.statusHistory = (Array.isArray(r.statusHistory) ? r.statusHistory : [])
       .filter(x => x && x.status)
@@ -392,6 +393,8 @@ PV.Model = (function () {
     clone.records.forEach(r => {
       r.log = [];
       r.evidence = (r.evidence || []).filter(e => e.consent === 'public');
+      r.sightings = (r.sightings || []).filter(x => x.consent === 'public');
+      if (r.currentHolder) r.currentHolder.note = '';
       r.relations = (r.relations || []).filter(x => kept.has(x.target));
       const loc = r.location || {};
       const hasCoords = typeof loc.lat === 'number' && typeof loc.lon === 'number';
@@ -474,9 +477,11 @@ PV.Model = (function () {
   /* when consent is withdrawn: pull their evidence out of everything public */
   function restrictSource(id, consent) {
     let n = 0;
-    S.records.forEach(r => (r.evidence || []).forEach(e => {
-      if (e.sourceId === id && e.consent === 'public') { e.consent = consent || 'restricted'; n++; }
-    }));
+    const c = consent || 'restricted';
+    S.records.forEach(r => {
+      (r.evidence || []).forEach(e => { if (e.sourceId === id && e.consent === 'public') { e.consent = c; n++; } });
+      (r.sightings || []).forEach(x => { if (x.sourceId === id && x.consent === 'public') { x.consent = c; n++; } });
+    });
     S.project.modified = PV.util.nowISO();
     return n;
   }

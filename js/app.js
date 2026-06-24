@@ -464,14 +464,13 @@ PV.App = (function () {
                 onclick: () => { document.querySelector('.sheet-overlay').remove(); location.hash = '#/entry/' + x.record.id; },
               }, x.record.id),
               U.h('span', { style: { fontSize: '15px', color: 'var(--ink-2)' } },
-                PV.Model.title(x.record) + ' · ' + x.kind +
-                (x.kind === 'evidence' ? ' (' + x.item.consent + ')' : ''))));
+                PV.Model.title(x.record) + ' · ' + x.kind + ' (' + x.item.consent + ')')));
           });
-          const pub = rests.filter(x => x.kind === 'evidence' && x.item.consent === 'public').length;
+          const pub = rests.filter(x => x.item.consent === 'public').length;
           if (pub) {
             restsBox.append(U.h('div', { class: 'add-line' }, U.h('button', {
               class: 'btn danger', onclick: () => {
-                if (!confirm('Mark all ' + pub + ' public evidence item' + (pub === 1 ? '' : 's') + ' from this source as restricted? Use this when their consent is withdrawn or in doubt.')) return;
+                if (!confirm('Mark all ' + pub + ' public item' + (pub === 1 ? '' : 's') + ' (evidence and sightings) from this source as restricted? Use this when their consent is withdrawn or in doubt.')) return;
                 const n = PV.Model.restrictSource(s.id, 'restricted');
                 PV.Store.save();
                 U.toast(n + (n === 1 ? ' item' : ' items') + ' restricted; nothing of theirs will publish');
