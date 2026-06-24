@@ -40,6 +40,16 @@ PV.Timeline = (function () {
       '<span class="bearing ' + U.esc(x.bearing) + '">' + U.esc(x.bearing) + '</span></div>';
   }
 
+  function claimLine(r, c) {
+    const cs = PV.vocab.claimStatusOf(c.status);
+    return '<div class="tl-item" data-id="' + U.esc(r.id) + '">' +
+      '<span class="when">' + U.esc(c.date || '') + '</span>' +
+      '<span class="no">' + U.esc(r.id) + '</span>' +
+      '<span class="what">Claim by ' + U.esc(c.claimant || 'an unnamed claimant') +
+      '<span class="by">' + U.esc(PV.Model.title(r)) + '</span></span>' +
+      '<span class="bearing claim">' + U.esc(cs.label) + '</span></div>';
+  }
+
   function eventBlock(ev, count) {
     let h = '<div class="tl-event"><div class="ev-tag">Dispersal event' + (ev.date ? ' · ' + U.esc(ev.date) : '') + '</div>';
     h += '<div class="ev-name">' + U.esc(ev.name || 'Unnamed event') + '</div>';
@@ -62,6 +72,7 @@ PV.Timeline = (function () {
     rs.forEach(r => {
       (r.custody || []).forEach(x => items.push({ kind: 'custody', when: parseWhen(x.date), r, x }));
       (r.sightings || []).forEach(x => items.push({ kind: 'sighting', when: parseWhen(x.date), r, x }));
+      (r.claims || []).forEach(x => items.push({ kind: 'claim', when: parseWhen(x.date), r, x }));
     });
     events.forEach(ev => items.push({
       kind: 'event', when: parseWhen(ev.date), ev,
@@ -75,15 +86,16 @@ PV.Timeline = (function () {
     const undated = items.filter(i => !i.when);
 
     let h = '<h2 class="head">Chronology</h2>' +
-      '<p class="subhead">the chains of custody and the sightings, set in time, with the dispersal events among them</p>';
+      '<p class="subhead">the chains of custody, the sightings, and the restitution claims, set in time, with the dispersal events among them</p>';
 
     if (!dated.length && !undated.length) {
-      h += '<p class="hint" style="font-style:italic">Nothing is dated yet. The chronology draws on each object\'s chain of custody and sightings, and on the dispersal events kept on this folio.</p>';
+      h += '<p class="hint" style="font-style:italic">Nothing is dated yet. The chronology draws on each object\'s chain of custody, sightings, and claims, and on the dispersal events kept on this folio.</p>';
       return h;
     }
 
     const line = i => i.kind === 'event' ? eventBlock(i.ev, i.count)
       : i.kind === 'sighting' ? sightingLine(i.r, i.x)
+      : i.kind === 'claim' ? claimLine(i.r, i.x)
       : custodyLine(i.r, i.x);
 
     let year = null;
