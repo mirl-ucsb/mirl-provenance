@@ -392,6 +392,7 @@ PV.Model = (function () {
     const round1 = x => Math.round(x * 10) / 10;
     clone.records.forEach(r => {
       r.log = [];
+      delete r._coordsManual;
       r.evidence = (r.evidence || []).filter(e => e.consent === 'public');
       r.sightings = (r.sightings || []).filter(x => x.consent === 'public');
       if (r.currentHolder) r.currentHolder.note = '';
@@ -532,6 +533,9 @@ PV.Model = (function () {
   function loadData(data) {
     if (!data || data.format !== 'mirl-provenance' || !Array.isArray(data.records)) {
       throw new Error('Not a provenance file.');
+    }
+    if (typeof data.version === 'number' && data.version > 1) {
+      PV.util.toast('This file was saved by a newer version of MIRL Provenance; some fields may not load.');
     }
     S.project = Object.assign(PV.blankProject(), data.project || {});
     S.project.events = (Array.isArray(S.project.events) ? S.project.events : [])
