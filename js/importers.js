@@ -130,7 +130,7 @@ PV.Importers = (function () {
       throw new Error('Not a provenance project file.');
     }
     const incoming = data.records.map(PV.Model.normalize);
-    const plan = { newRecords: [], conflicts: [], identical: 0, newEvents: [], newSources: [], evtMap: {}, srcMap: {} };
+    const plan = { newRecords: [], conflicts: [], identical: 0, newEvents: [], newSources: [], newLabels: [], evtMap: {}, srcMap: {} };
 
     const meatOf = o => { const c = Object.assign({}, o); delete c.id; return JSON.stringify(c); };
     const remapSide = (list, local, prefix, mapOut, addOut) => {
@@ -154,6 +154,15 @@ PV.Importers = (function () {
     remapSide(((data.project && data.project.sources) || []).map(s =>
       ({ id: s.id, alias: s.alias || '', name: s.name || '', contact: s.contact || '', consent: s.consent || '', note: s.note || '' })),
       S.project.sources || [], 'src', plan.srcMap, plan.newSources);
+
+    /* community-defined labels referenced by tkLabels carry by code; bring over
+       any whose code is not already defined locally, under a fresh id */
+    const localLabelCodes = new Set((S.project.labels || []).map(l => l.code));
+    let lblMax = 0;
+    (S.project.labels || []).forEach(l => { const m = /^lbl-(\d+)$/.exec(l.id || ''); if (m) lblMax = Math.max(lblMax, +m[1]); });
+    plan.newLabels = (((data.project && data.project.labels) || []))
+      .filter(l => l && l.code && !localLabelCodes.has(l.code))
+      .map(l => ({ id: 'lbl-' + (++lblMax), code: l.code, name: l.name || '', gloss: l.gloss || '', community: l.community || '' }));
 
     incoming.forEach(inc => {
       const local = PV.Model.get(inc.id);
@@ -196,6 +205,8 @@ PV.Importers = (function () {
 
     plan.newEvents.forEach(e => S.project.events.push(e));
     plan.newSources.forEach(s => S.project.sources.push(s));
+    if ((plan.newLabels || []).length && !Array.isArray(S.project.labels)) S.project.labels = [];
+    (plan.newLabels || []).forEach(l => S.project.labels.push(l));
     S.project.modified = U.nowISO();
   }
 
