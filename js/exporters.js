@@ -261,6 +261,7 @@ PV.Exporters = (function () {
      held-back file may print, with a reminder. */
   function printNotice(r) {
     if (!r) return U.toast('Open an object file first');
+    if (r.struck) return U.toast('This object file is struck; a struck record is not circulated as a notice.');
     const p = S.project;
     const e = U.esc;
     const st = PV.vocab.statusOf(r.status);
@@ -319,6 +320,7 @@ PV.Exporters = (function () {
      real letter, not a substitute for counsel. */
   function claimLetter(r) {
     if (!r) return U.toast('Open an object file first');
+    if (r.struck) return U.toast('This object file is struck; a struck record is not circulated as a claim letter.');
     const p = S.project;
     const e = U.esc;
     const title = PV.Model.title(r);
