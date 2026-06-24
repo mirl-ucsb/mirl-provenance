@@ -513,6 +513,22 @@ PV.Exporters = (function () {
     };
   }
 
+  /* a sha-256 manifest of the published evidence files, so a recipient can run
+     their own fixity check against the dossier without the working file */
+  function manifest() {
+    const pub = PV.Model.publicClone();
+    const lines = [];
+    (pub.records || []).forEach(r => {
+      (r.evidence || []).forEach(e => {
+        if (e.sha256) lines.push(e.sha256 + '  ' + ((e.file && e.file.name) || e.label || e.id));
+      });
+    });
+    if (!lines.length) return U.toast('No published evidence with a recorded hash yet.');
+    const header = '# sha-256 manifest for ' + (S.project.title || 'object file') + '\n# verify with: sha256sum -c <this file>\n';
+    U.downloadText(U.slug(S.project.title) + '-manifest.sha256', header + lines.join('\n') + '\n', 'text/plain');
+    U.toast(lines.length + (lines.length === 1 ? ' hash' : ' hashes') + ' saved to the manifest');
+  }
+
   return { saveProject, publicJSON, registerCSV, findingAid, printBook, printNotice,
-    claimLetter, objectIDExport, jsonldExport, releaseSummary };
+    claimLetter, objectIDExport, jsonldExport, releaseSummary, manifest };
 })();

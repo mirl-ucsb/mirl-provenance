@@ -670,6 +670,7 @@ PV.App = (function () {
       closeMenus();
       if (act === 'csv') confirmRelease('docket spreadsheet', () => PV.Exporters.registerCSV());
       else if (act === 'json') confirmRelease('public data file', () => PV.Exporters.publicJSON());
+      else if (act === 'manifest') confirmRelease('hash manifest', () => PV.Exporters.manifest());
       else if (act === 'objectid') confirmRelease('Object ID records', () => PV.Exporters.objectIDExport());
       else if (act === 'jsonld') confirmRelease('linked data file', () => PV.Exporters.jsonldExport());
       else if (act === 'aid') confirmRelease('public file', () => PV.Exporters.findingAid());
