@@ -296,11 +296,15 @@ PV.Register = (function () {
     batchline();
 
     host.querySelectorAll('th[data-sort]').forEach(th => {
-      th.addEventListener('click', () => {
+      th.setAttribute('tabindex', '0');
+      th.setAttribute('role', 'button');
+      const doSort = () => {
         const by = th.dataset.sort;
         if (S.sort.by === by) S.sort.dir = -S.sort.dir; else { S.sort.by = by; S.sort.dir = 1; }
         renderTable();
-      });
+      };
+      th.addEventListener('click', doSort);
+      th.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doSort(); } });
     });
   }
 
