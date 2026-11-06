@@ -94,9 +94,9 @@ def main():
         "   GeoNames (CC BY 4.0) by vendor/make-gazetteer.py; coordinates rounded\n"
         "   to about a kilometre. Each city row is name, ascii name (when it\n"
         "   differs), country code, lat, lon; rows run most-populous first. */\n"
-        "window.LC = window.LC || {};\n"
-        "LC.GAZ = " + js_string(body) + ";\n"
-        "LC.GAZ_COUNTRIES = {" + ckeys + "};\n"
+        "window.PV = window.PV || {};\n"
+        "PV.GAZ = " + js_string(body) + ";\n"
+        "PV.GAZ_COUNTRIES = {" + ckeys + "};\n"
     )
     out = os.path.join(HERE, "gazetteer.js")
     with open(out, "w", encoding="utf-8") as f:

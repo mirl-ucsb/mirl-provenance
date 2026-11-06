@@ -81,8 +81,8 @@ def main():
           "   on a 1000 x 500 equirectangular canvas. Natural Earth 1:110m land\n"
           "   (public domain) via the world-atlas package; regenerate with\n"
           "   vendor/make-land.py. */\n"
-          "window.LC = window.LC || {};\n"
-          'LC.LAND = "' + path + '";\n')
+          "window.PV = window.PV || {};\n"
+          'PV.LAND = "' + path + '";\n')
     with open("land.js" if "/" not in __file__ else __file__.rsplit("/", 1)[0] + "/land.js", "w") as f:
         f.write(js)
     print("wrote land.js (%d KB, %d rings)" % (len(js) // 1024, path.count("Z")))
