@@ -143,8 +143,9 @@ cd samples && python3 make-samples.py   # needs Pillow
 
 Built by Jeff O'Brien for the Material / Image Research Lab, Department of
 History of Art & Architecture, UC Santa Barbara. MIT licensed; see
-[`LICENSE`](LICENSE). Type: Spectral and IBM Plex Mono, with Noto Naskh Arabic,
-all vendored from Fontsource. Deep-zoom viewing by OpenSeadragon. Offline
+[`LICENSE`](LICENSE). It wears the lab's identity: type in Familjen Grotesk and
+Epilogue, with IBM Plex Mono and Noto Naskh Arabic, all vendored from Fontsource
+under the SIL Open Font License, and the coral of the MIRL Risograph mark. Deep-zoom viewing by OpenSeadragon. Offline
 geocoding from GeoNames; coastline from Natural Earth. The CARE principles are
 those of the Global Indigenous Data Alliance; the TK and BC Labels are those of
 [Local Contexts](https://localcontexts.org). If you use it, please cite it with

@@ -5,7 +5,7 @@
    vendored libraries, and the sample images cache-first (they do not
    change). Bump CACHE with each release so old copies are cleared. */
 
-const CACHE = 'mirl-provenance-v1.0.0';
+const CACHE = 'mirl-provenance-2026-11-06';
 
 const CORE = [
   './',
@@ -33,10 +33,18 @@ const CORE = [
   'samples/img/accession-card.png',
   'samples/img/studio-portrait.png',
   'samples/img/relief-fragment.png',
-  'fonts/spectral-latin-400-normal.woff2',
-  'fonts/spectral-latin-400-italic.woff2',
-  'fonts/spectral-latin-500-normal.woff2',
-  'fonts/spectral-latin-600-normal.woff2',
+  'fonts/familjen-grotesk-latin-500-normal.woff2',
+  'fonts/familjen-grotesk-latin-ext-500-normal.woff2',
+  'fonts/familjen-grotesk-latin-600-normal.woff2',
+  'fonts/familjen-grotesk-latin-ext-600-normal.woff2',
+  'fonts/familjen-grotesk-latin-700-normal.woff2',
+  'fonts/familjen-grotesk-latin-ext-700-normal.woff2',
+  'fonts/epilogue-latin-400-normal.woff2',
+  'fonts/epilogue-latin-ext-400-normal.woff2',
+  'fonts/epilogue-latin-500-normal.woff2',
+  'fonts/epilogue-latin-ext-500-normal.woff2',
+  'fonts/epilogue-latin-600-normal.woff2',
+  'fonts/epilogue-latin-ext-600-normal.woff2',
   'fonts/ibm-plex-mono-latin-400-normal.woff2',
   'fonts/ibm-plex-mono-latin-500-normal.woff2',
   'fonts/noto-naskh-arabic-arabic-400-normal.woff2',

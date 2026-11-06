@@ -52,7 +52,7 @@ PV.Card = (function () {
       h += '<div class="ev-label"' + dirAttr(x.holder) + '>' + U.esc(x.holder || 'unknown holder') + '</div>';
       const meta = [x.transfer && x.transfer !== 'unknown' ? U.esc(x.transfer) : '',
         '<span class="cert"><span class="pt">' + cert.pt + '</span>' + cert.label + '</span>'].filter(Boolean).join(' · ');
-      if (meta) h += '<div class="ev-meta">' + meta + '</div>';
+      if (meta) h += '<div class="ev-meta plain">' + meta + '</div>';
       if (x.note) h += '<div class="ev-note"' + dirAttr(x.note) + '>' + U.esc(x.note) + '</div>';
       h += '</td></tr>';
     });
@@ -72,10 +72,10 @@ PV.Card = (function () {
       if (bases.length) h += '<div class="basis-band">' + bases.map(b =>
         '<span class="basis" title="' + U.esc(b.gloss) + '">' + U.esc(b.label) + '</span>').join('') + '</div>';
       if (x.basis) h += '<div class="ev-note"' + dirAttr(x.basis) + '>' + U.esc(x.basis) + '</div>';
-      if (x.note) h += '<div class="ev-meta">' + U.esc(x.note) + '</div>';
+      if (x.note) h += '<div class="ev-meta plain">' + U.esc(x.note) + '</div>';
       h += '</td><td style="width:170px;text-align:right">' +
         '<span class="claim-status ' + (resolved ? 'resolved' : x.status === 'denied' ? 'denied' : 'open') + '">' + U.esc(cs.label) + '</span>' +
-        (x.date ? '<div class="ev-meta">' + U.esc(x.date) + '</div>' : '') + '</td></tr>';
+        (x.date ? '<div class="ev-meta plain">' + U.esc(x.date) + '</div>' : '') + '</td></tr>';
     });
     return h + '</table></div>';
   }
@@ -226,7 +226,7 @@ PV.Card = (function () {
     lines.forEach(l => {
       h += '<tr><td class="kind" style="width:110px;padding-top:13px">' + U.esc(l.label) + '</td>' +
         '<td><a class="rel-link" href="#/entry/' + U.esc(l.rec.id) + '">' +
-        '<span style="font-family:var(--mono);font-size:12.5px;color:var(--stamp)">' + U.esc(l.rec.id) + '</span>  ' +
+        '<span style="font-size:14px;font-weight:500;color:var(--key-ink)">' + U.esc(l.rec.id) + '</span>  ' +
         U.esc(PV.Model.title(l.rec)) + '</a>' +
         (l.rec.struck ? ' <span class="consent restricted">struck</span>' : '') + '</td></tr>';
     });
@@ -623,13 +623,13 @@ PV.Desk = (function () {
           r.eventId = ev.id;
           PV.App.entryChanged(r, true);
           drawEvent();
-          U.toast('Event added and assigned; its date and note live on the Chronology folio');
+          U.toast('Event added and assigned; its date and note live on the Chronology');
         },
       }, '+ Add');
       newName.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); add.click(); } });
       evBox.append(evSel,
         U.h('div', { style: { display: 'flex', gap: '14px', alignItems: 'baseline', marginTop: '10px' } }, newName, add),
-        U.h('div', { class: 'note' }, 'Dispersal events (a punitive expedition, a war, a market sale) gather objects scattered together; their dates, places, and notes are kept on the Chronology folio.'));
+        U.h('div', { class: 'note' }, 'Dispersal events (a punitive expedition, a war, a market sale) gather objects scattered together; their dates, places, and notes are kept on the Chronology.'));
     };
     drawEvent();
     drawHistory();
@@ -1291,7 +1291,7 @@ PV.Desk = (function () {
     pubBox.addEventListener('change', () => { r.publish = pubBox.checked; PV.App.entryChanged(r, true); });
     desk.append(sect('Publication', 'whether this object file leaves the working file at all',
       U.h('div', { class: 'field' },
-        U.h('label', { class: 'inline', style: { fontFamily: 'var(--serif)', textTransform: 'none', letterSpacing: '0' } },
+        U.h('label', { class: 'inline' },
           pubBox, 'Publish this object file'),
         U.h('div', { class: 'note' },
           'Off by default. Until you tick it, the whole file stays out of the dossier, the public file, the spreadsheet, and the sought notice: catalogued and counted, but held back.'))));

@@ -4,6 +4,34 @@ All notable changes to MIRL Provenance are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project aims at
 [semantic versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- **The MIRL identity.** Provenance takes the lab's own look, shared with the
+  lab site and the other MIRL tools: Familjen Grotesk for names and headings,
+  Epilogue for everything you read and operate, on the lab's paper white.
+  Its key is the coral of the MIRL Risograph mark, with teal as the second
+  pigment, shown as a soft bloom beside its name. Both typefaces are vendored
+  in `fonts/` under the SIL Open Font License, with their licence texts;
+  Spectral is gone. Nothing about how an object file is kept, saved, or
+  protected changes, and existing project files open as before.
+- **Plain words.** Labels, buttons, and statuses are set in sentence case;
+  the folio numbers and the stamped capitals are gone. Views are simply
+  Docket, Object file, Chronology, Statistics, Atlas, and Index.
+- **Readable everywhere.** Every text colour meets WCAG AA. Statuses are
+  tinted tags that say what they mean in words as well as colour: the
+  contested and claimed in oxide red, kept apart from the coral of links;
+  the documented and unlocated in grey; the located and restituted in blue.
+- **A clearer bar.** One sticky line carries the mark, the views, and the
+  actions, with New object as the single filled button, a skip link for
+  keyboard users, and the lab named in a footer. The release preview marks
+  its export as the primary action while focus still starts on Cancel.
+- **Phones.** Wide tables scroll within themselves, never the whole page,
+  and the bar wraps into a swipeable row of views.
+- **Published documents follow.** The public file, the restitution dossier,
+  the claim letter, and the sought notice carry the same type and palette.
+
 ## [1.0.0] - 2026-06-18
 
 First public release, archived on Zenodo. Concept DOI

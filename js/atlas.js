@@ -99,7 +99,7 @@ PV.Atlas = (function () {
       });
       h += '</tbody></table>';
     } else {
-      h += '<p class="hint" style="margin-top:26px;font-style:italic">Nothing is plotted yet. Type a current location into an object file (a city, or a place ending in a city) and it appears here.</p>';
+      h += '<p class="hint" style="margin-top:26px">Nothing is plotted yet. Type a current location into an object file (a city, or a place ending in a city) and it appears here.</p>';
     }
 
     if (opts.publicOnly && withheldFromExport > 0) {

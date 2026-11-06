@@ -9,25 +9,19 @@
 </head>
 <body>
 
-<header class="app">
-  <div class="plate">
-    <h1>MIRL&nbsp;Provenance</h1>
-    <span class="tag">an object file for dispersal and restitution</span>
-  </div>
-  <a class="lab" href="https://mirl.arthistory.ucsb.edu" target="_blank" rel="noopener">Material&nbsp;/&nbsp;Image Research Lab<span class="uni">University of California, Santa&nbsp;Barbara</span></a>
-</header>
+<a class="skip-link" href="#main">Skip to the docket</a>
 
-<nav class="folio">
+<nav class="folio" aria-label="MIRL Provenance">
+  <div class="brand" role="img" aria-label="MIRL Provenance"><span class="bleed" aria-hidden="true"></span><b aria-hidden="true">MIRL</b><span class="tool" aria-hidden="true">Provenance</span></div>
   <div class="views">
-    <button class="view on" data-view="register"><span class="fol">Fol. I</span>Docket</button>
-    <button class="view" data-view="entry"><span class="fol">Fol. II</span>Object file</button>
-    <button class="view" data-view="timeline"><span class="fol">Fol. III</span>Chronology</button>
-    <button class="view" data-view="statistics"><span class="fol">Fol. IV</span>Statistics</button>
-    <button class="view" data-view="atlas"><span class="fol">Fol. V</span>Atlas</button>
-    <button class="view" data-view="index"><span class="fol">Fol. VI</span>Index</button>
+    <button class="view on" data-view="register">Docket</button>
+    <button class="view" data-view="entry">Object file</button>
+    <button class="view" data-view="timeline">Chronology</button>
+    <button class="view" data-view="statistics">Statistics</button>
+    <button class="view" data-view="atlas">Atlas</button>
+    <button class="view" data-view="index">Index</button>
   </div>
   <div class="tools">
-    <button class="btn" id="new-entry-btn" title="Open a new object file in the docket">New object</button>
     <div class="menu-wrap">
       <button class="btn" id="project-btn">Project &#9662;</button>
       <div class="menu hidden" id="project-menu">
@@ -64,10 +58,11 @@
         <button data-act="print">Print this view</button>
       </div>
     </div>
+    <button class="btn primary" id="new-entry-btn" title="Open a new object file in the docket">New object</button>
   </div>
 </nav>
 
-<main>
+<main id="main" tabindex="-1">
   <section class="view" id="view-register"></section>
   <section class="view hidden" id="view-entry"></section>
   <section class="view hidden" id="view-timeline"></section>
@@ -75,6 +70,11 @@
   <section class="view hidden" id="view-atlas"></section>
   <section class="view hidden" id="view-index"></section>
 </main>
+
+<footer class="app-foot"><div class="in">
+  <span>MIRL Provenance, an object file for dispersal and restitution.</span>
+  <span>Made at the <a href="https://mirl.arthistory.ucsb.edu" target="_blank" rel="noopener">Material / Image Research Lab</a>, UC Santa Barbara.</span>
+</div></footer>
 
 <div class="toast" id="toast"></div>
 <input type="file" id="file-input" class="sr">

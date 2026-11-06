@@ -1,4 +1,4 @@
-/* timeline.js: the chronology. The atlas covers space; this folio covers
+/* timeline.js: the chronology. The atlas covers space; this view covers
    time: every link in every chain of custody, and every sighting, set in
    order, with the dispersal events among them as notices. Dispersal events
    themselves are kept here too. The chronicle renderer is a pure function over
@@ -89,7 +89,7 @@ PV.Timeline = (function () {
       '<p class="subhead">the chains of custody, the sightings, and the restitution claims, set in time, with the dispersal events among them</p>';
 
     if (!dated.length && !undated.length) {
-      h += '<p class="hint" style="font-style:italic">Nothing is dated yet. The chronology draws on each object\'s chain of custody, sightings, and claims, and on the dispersal events kept on this folio.</p>';
+      h += '<p class="hint">Nothing is dated yet. The chronology draws on each object\'s chain of custody, sightings, and claims, and on the dispersal events kept here.</p>';
       return h;
     }
 
@@ -163,7 +163,7 @@ PV.Timeline = (function () {
     return U.h('div', { class: 'frontmatter', style: { margin: '30px 0 0' } },
       det,
       U.h('div', { class: 'fm-line', style: { marginTop: '10px' } },
-        'Assign objects to an event from the registrar\'s desk; the statistics folio counts what each event scattered.'));
+        'Assign objects to an event from the object file editor; the Statistics view counts what each event scattered.'));
   }
 
   function render() {
